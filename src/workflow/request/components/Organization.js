@@ -19,14 +19,21 @@ function Organization(props) {
   const classes = useStyles();
   const [options, setOptions] = React.useState([]);
   const [value, setValue] = React.useState("");
+  const [location, setLocation] = React.useState({lat: null, long: null});
   const timer = React.useRef();
+
+  React.useEffect(() => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  }, [])
 
   React.useEffect(() => {
     if (!value) return;
 
     const data = async () => {
       const res = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&types=establishment&radius=1000&key=${process.env.REACT_APP_API_KEY}`,
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&location=${location.lat},${location.long}&types=establishment&radius=1000&key=${process.env.REACT_APP_API_KEY}`,
         { "Access-Control-Allow-Origin": "*" }
       );
       const json = await res.json();
@@ -39,6 +46,13 @@ function Organization(props) {
     }, 300);
     timer.current = delay;
   }, [value]);
+
+  const showPosition = (position) => {
+    setLocation({
+        lat: position.coords.latitude,
+        long: position.coords.longitude
+    })
+  }
 
   const handleChange = event => {
     const { value } = event.target;
