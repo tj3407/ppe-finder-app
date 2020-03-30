@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ppe-finder-app/precache-manifest.878604d2488f1a97b7456198f71a6512.js"
+  "/ppe-finder-app/precache-manifest.2d2eb9fd331b83c20fc35c2d9ad7813e.js"
 );
 
 self.addEventListener('message', (event) => {
