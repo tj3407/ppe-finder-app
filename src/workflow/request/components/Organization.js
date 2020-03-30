@@ -33,7 +33,7 @@ function Organization(props) {
 
     const data = async () => {
       const res = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&location=${location.lat},${location.long}&types=establishment&radius=1000&key=${process.env.REACT_APP_API_KEY}`,
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&location=${location.lat},${location.long}&types=establishment&radius=50000&key=${process.env.REACT_APP_API_KEY}`,
         { "Access-Control-Allow-Origin": "*" }
       );
       const json = await res.json();
