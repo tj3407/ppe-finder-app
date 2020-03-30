@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Grid, Typography, Divider, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { BrowserRouter, Route } from "react-router-dom";
+import { HashRouter, BrowserRouter, Route } from "react-router-dom";
 import SupervisedUserCircleOutlinedIcon from '@material-ui/icons/SupervisedUserCircleOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -41,7 +41,7 @@ function AppLayout() {
         </Link>
       </Grid>
       <Divider style={{ width: "100%" }} />
-      <BrowserRouter>
+      <HashRouter basename="/">
         <Suspense fallback={<Grid item xs={12} className={classes.loader}><CircularProgress className={classes.progress} /></Grid>}>
           <Route
             exacts
@@ -68,7 +68,7 @@ function AppLayout() {
             component={() => <DonateToOrgPage />}
           />
         </Suspense>
-      </BrowserRouter>
+      </HashRouter>
     </React.Fragment>
   );
 }
