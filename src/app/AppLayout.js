@@ -34,7 +34,7 @@ function AppLayout() {
   return (
     <React.Fragment>
       <Grid container justify="flex-start">
-        <Link href="/" className={classes.link}>
+        <Link href="/ppe-finder-app" className={classes.link}>
           <Typography variant="h4" className={classes.h4}>
             D<SupervisedUserCircleOutlinedIcon />nate PPE
           </Typography>

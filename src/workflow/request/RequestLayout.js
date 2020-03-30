@@ -66,7 +66,7 @@ function RequestLayout() {
 
   const getOrgAddress = async id => {
     const res = await fetch(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=name,formatted_address,geometry&key=${process.env.REACT_APP_API_KEY}`
+      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=name,formatted_address,geometry&key=${process.env.REACT_APP_API_KEY}`
     );
     const json = await res.json();
     form.current.orgAddress = json.result;
