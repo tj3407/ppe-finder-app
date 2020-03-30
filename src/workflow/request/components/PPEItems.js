@@ -5,6 +5,12 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import "../stylesheet/request.scss";
+import n95 from "../../../images/n95-mask.png";
+import faceMask from "../../../images/face-mask.jpg";
+import faceShield from "../../../images/face-shield.jpeg";
+import gloves from "../../../images/gloves.jpg";
+import coverall from "../../../images/coverall.jpeg";
+
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -79,7 +85,7 @@ function PPEItems(props) {
       <Card className={classes.card} onClick={() => handleClick("n95")}>
         <CardMedia
           className={classes.media}
-          image="/images/n95-mask.png"
+          image={n95}
           title="N95 Face Mask"
           label="n95"
         />
@@ -92,7 +98,7 @@ function PPEItems(props) {
       <Card className={classes.card} onClick={() => handleClick("face mask")}>
         <CardMedia
           className={classes.media}
-          image="/images/face-mask.jpg"
+          image={faceMask}
           title="Face Mask"
         />
         <CardHeader
@@ -104,7 +110,7 @@ function PPEItems(props) {
       <Card className={classes.card} onClick={() => handleClick("face shield")}>
         <CardMedia
           className={classes.media}
-          image="/images/face-shield.jpeg"
+          image={faceShield}
           title="Face Shield"
         />
         <CardHeader
@@ -116,7 +122,7 @@ function PPEItems(props) {
       <Card className={classes.card} onClick={() => handleClick("gloves")}>
         <CardMedia
           className={classes.media}
-          image="/images/gloves.jpg"
+          image={gloves}
           title="Gloves"
         />
         <CardHeader
@@ -128,7 +134,7 @@ function PPEItems(props) {
       <Card className={classes.card} onClick={() => handleClick("coverall")}>
         <CardMedia
           className={classes.media}
-          image="/images/coverall.jpeg"
+          image={coverall}
           title="Coverall"
         />
         <CardHeader

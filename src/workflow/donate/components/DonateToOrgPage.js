@@ -122,7 +122,7 @@ function DonateToOrgPage(props) {
               color="primary"
               className={classes.button}
             >
-              I'll bring it in
+              I can bring it in
             </Button>
             <Button fullWidth variant="contained" color="secondary">
               Request a Volunteer Courier
