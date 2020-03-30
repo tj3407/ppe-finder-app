@@ -27,12 +27,13 @@ function Department(props) {
 
   return (
     <Grid className={classes.input}>
-      <TextField 
+      <TextField
+        required
         className={classes.field}
         name="department"
         variant="outlined" 
         fullWidth 
-        label="Department Name (Optional)"
+        label="Department Name"
         onChange={handleChange}
       />
       <TextField

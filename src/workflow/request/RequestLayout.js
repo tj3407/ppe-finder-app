@@ -36,7 +36,8 @@ function RequestLayout() {
 
   const form = React.useRef({
     items: [],
-    orgName: "",
+    orgName: {},
+    orgAddress: {},
     department: "",
     building: "",
     contact: ""
@@ -60,6 +61,15 @@ function RequestLayout() {
 
   const getOrgName = value => {
     form.current.orgName = value;
+    getOrgAddress(value.place_id);
+  };
+
+  const getOrgAddress = async id => {
+    const res = await fetch(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=name,formatted_address,geometry&key=${process.env.REACT_APP_API_KEY}`
+    );
+    const json = await res.json();
+    form.current.orgAddress = json.result;
   };
 
   const getDepartment = value => {
@@ -98,7 +108,6 @@ function RequestLayout() {
       .catch(error => {
         setError(error);
       });
-    console.log(form.current);
   };
 
   return (
@@ -107,7 +116,14 @@ function RequestLayout() {
         Request for PPE
       </Typography>
       {error && <Alert severity="error">{error}</Alert>}
-      <Snackbar open={success} autoHideDuration={6000}>
+      <Snackbar
+        open={success}
+        autoHideDuration={6000}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+      >
         <Alert severity="success">
           Thank you for your service! Your request for the items have been
           added.

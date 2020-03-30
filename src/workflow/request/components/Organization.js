@@ -46,11 +46,11 @@ function Organization(props) {
     setValue(value);
   };
 
-  const handleInputChange = (event, value) => {
+  const handleAutoCompletChange = (event, value) => {
     if (props.org) {
-      props.org(value);
+        props.org(value);
     }
-  };
+  }
 
   return (
     <Grid item xs={12} className={classes.input}>
@@ -58,7 +58,7 @@ function Organization(props) {
         id="autocomplete"
         freeSolo
         options={options}
-        onInputChange={handleInputChange}
+        onChange={handleAutoCompletChange}
         getOptionLabel={option => option.structured_formatting.main_text}
         renderOption={option => (
           <React.Fragment>

@@ -32,7 +32,8 @@ function ConfirmationPage(props) {
     orgName: "Organization Name",
     department: "Department Name",
     building: "Building Name/Number",
-    contact: "Contact Person"
+    contact: "Contact Person",
+    orgAddress: "Organization Address"
   };
 
   const itemMapping = {
@@ -73,6 +74,40 @@ function ConfirmationPage(props) {
                 </Paper>
               </React.Fragment>
             );
+          }
+
+          if (key === "orgName") {
+            return (
+                <React.Fragment key={key}>
+                  <Paper variant="outlined" className={classes.paper}>
+                  <Grid container justify="space-between">
+                    <Grid item xs={12} sm={6} style={{ textAlign: "left" }}>
+                        <Typography variant="body1">{mapping[key]}:</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
+                        <Typography variant="body1">{props.form[key].structured_formatting.main_text}</Typography>
+                    </Grid>
+                  </Grid>
+                  </Paper>
+                </React.Fragment>
+              );
+          }
+
+          if (key === "orgAddress") {
+            return (
+                <React.Fragment key={key}>
+                  <Paper variant="outlined" className={classes.paper}>
+                  <Grid container justify="space-between">
+                    <Grid item xs={12} sm={6} style={{ textAlign: "left" }}>
+                        <Typography variant="body1">{mapping[key]}:</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
+                        <Typography variant="body1">{props.form[key].formatted_address}</Typography>
+                    </Grid>
+                  </Grid>
+                  </Paper>
+                </React.Fragment>
+              );
           }
 
           return (

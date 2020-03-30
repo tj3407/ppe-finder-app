@@ -57,15 +57,16 @@ const MainLayout = props => {
           Donate
         </CardItem>
       </Grid>
-      <Grid item xs={12} sm={8} style={{ textAlign: "left" }}>
-        <Typography variant="h6" color="inherit">
+      <Grid item xs={12} md={8} style={{ textAlign: "justify" }}>
+        <Typography variant="body1" color="inherit">
           During this time of need, it is more important than ever to support
           the brave people who are in the frontline in the fight against
           COVID-19. This site was developed to leverage the power of
           volunteerism and community. We believe that people do care and are
           willing to help others in uncertain times so we created a platform for
           citizens or organizations to donate the necessary supplies that are
-          needed to help fight a global pandemic. Together we can beat this!
+          needed to help protect the people that are directly fighting this
+          global pandemic. Together we can beat this!
         </Typography>
       </Grid>
     </Grid>
