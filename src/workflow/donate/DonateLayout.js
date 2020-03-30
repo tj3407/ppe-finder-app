@@ -75,14 +75,16 @@ function DonateLayout(props) {
     <Grid container justify="center">
       {data.length
         ? data.map((item, index) => {
+            const orgName = (item.orgName && item.orgName.structured_formatting && item.orgName.structured_formatting.main_text) || item.orgName || "";
+            const orgAddress = (item.orgAddress && item.orgAddress.formatted_address) || item.orgAddress || "";
             return (
               <Grid key={`${item}-${index}`} item xs={12} sm={5} className={classes.root}>
               <Card variant="outlined" className={classes.paper}>
                   <CardHeader
                     className={classes.header}
                     disableTypography
-                    title={<Typography variant="h6">{item.orgName.structured_formatting.main_text}</Typography>}
-                    subheader={<Typography variant="body2">{item.orgAddress.formatted_address}</Typography>}
+                    title={<Typography variant="h6">{orgName}</Typography>}
+                    subheader={<Typography variant="body2">{orgAddress}</Typography>}
                   />
                 <Divider className={classes.divider} />
                 <CardContent >

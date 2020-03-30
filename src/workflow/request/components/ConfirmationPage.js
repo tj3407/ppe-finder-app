@@ -77,6 +77,7 @@ function ConfirmationPage(props) {
           }
 
           if (key === "orgName") {
+            const value = (props.form[key] && props.form[key].structured_formatting && props.form[key].structured_formatting.main_text) || props.form[key] || "";
             return (
                 <React.Fragment key={key}>
                   <Paper variant="outlined" className={classes.paper}>
@@ -85,7 +86,7 @@ function ConfirmationPage(props) {
                         <Typography variant="body1">{mapping[key]}:</Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
-                        <Typography variant="body1">{props.form[key].structured_formatting.main_text}</Typography>
+                        <Typography variant="body1">{value}</Typography>
                     </Grid>
                   </Grid>
                   </Paper>
@@ -94,6 +95,7 @@ function ConfirmationPage(props) {
           }
 
           if (key === "orgAddress") {
+            const value = (props.form[key] && props.form[key].formatted_address) || props.form[key] || ""
             return (
                 <React.Fragment key={key}>
                   <Paper variant="outlined" className={classes.paper}>
@@ -102,7 +104,7 @@ function ConfirmationPage(props) {
                         <Typography variant="body1">{mapping[key]}:</Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} style={{ textAlign: "right" }}>
-                        <Typography variant="body1">{props.form[key].formatted_address}</Typography>
+                        <Typography variant="body1">{value}</Typography>
                     </Grid>
                   </Grid>
                   </Paper>

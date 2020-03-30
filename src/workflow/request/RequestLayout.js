@@ -37,8 +37,8 @@ function RequestLayout() {
 
   const form = React.useRef({
     items: [],
-    orgName: {},
-    orgAddress: {},
+    orgName: null,
+    orgAddress: null,
     department: "",
     building: "",
     contact: ""
@@ -62,7 +62,9 @@ function RequestLayout() {
 
   const getOrgName = value => {
     form.current.orgName = value;
-    getOrgAddress(value.place_id);
+    if (value.place_id) {
+      getOrgAddress(value.place_id);
+    }
   };
 
   const getOrgAddress = async id => {

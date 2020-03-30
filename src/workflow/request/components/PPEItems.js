@@ -17,11 +17,20 @@ const useStyles = makeStyles(theme => ({
     width: 200,
     margin: theme.spacing(2),
     cursor: "pointer",
-    display: "inline-block"
+    display: "inline-block",
+    padding: theme.spacing(2)
   },
   media: {
     height: 0,
     paddingTop: "56.25%" // 16:9
+  },
+  clicked: {
+    border: "solid 2px green",
+    width: 200,
+    margin: theme.spacing(2),
+    cursor: "pointer",
+    display: "inline-block",
+    padding: theme.spacing(2)
   }
 }));
 
@@ -40,36 +49,52 @@ function PPEItems(props) {
     if (!items.current.includes(name)) {
       items.current.push(name);
     }
+    const index = items.current.indexOf(name);
     switch (name) {
       case "n95":
         setColor({
           ...color,
           n95: color["n95"] === "action" ? "primary" : "action"
         });
+        if (color["n95"] !== "action" && items.current.includes(name)) {
+          items.current.splice(index, 1);
+        }
         break;
       case "face mask":
         setColor({
           ...color,
           faceMask: color["faceMask"] === "action" ? "primary" : "action"
         });
+        if (color["faceMask"] !== "action" && items.current.includes(name)) {
+          items.current.splice(index, 1);
+        }
         break;
       case "face shield":
         setColor({
           ...color,
           faceShield: color["faceShield"] === "action" ? "primary" : "action"
         });
+        if (color["faceShield"] !== "action" && items.current.includes(name)) {
+          items.current.splice(index, 1);
+        }
         break;
       case "gloves":
         setColor({
           ...color,
           gloves: color["gloves"] === "action" ? "primary" : "action"
         });
+        if (color["gloves"] !== "action" && items.current.includes(name)) {
+          items.current.splice(index, 1);
+        }
         break;
       case "coverall":
         setColor({
           ...color,
           coverall: color["coverall"] === "action" ? "primary" : "action"
         });
+        if (color["coverall"] !== "action" && items.current.includes(name)) {
+          items.current.splice(index, 1);
+        }
         break;
       default:
         break;
@@ -82,7 +107,7 @@ function PPEItems(props) {
 
   return (
     <React.Fragment>
-      <Card className={classes.card} onClick={() => handleClick("n95")}>
+      <Card variant="outlined" className={color["n95"] === "action" ? classes.card : classes.clicked} onClick={() => handleClick("n95")}>
         <CardMedia
           className={classes.media}
           image={n95}
@@ -95,7 +120,7 @@ function PPEItems(props) {
           action={<CheckCircleOutlineIcon color={color.n95} />}
         />
       </Card>
-      <Card className={classes.card} onClick={() => handleClick("face mask")}>
+      <Card variant="outlined" className={color["faceMask"] === "action" ? classes.card : classes.clicked} onClick={() => handleClick("face mask")}>
         <CardMedia
           className={classes.media}
           image={faceMask}
@@ -107,7 +132,7 @@ function PPEItems(props) {
           action={<CheckCircleOutlineIcon color={color.faceMask} />}
         />
       </Card>
-      <Card className={classes.card} onClick={() => handleClick("face shield")}>
+      <Card variant="outlined" className={color["faceShield"] === "action" ? classes.card : classes.clicked} onClick={() => handleClick("face shield")}>
         <CardMedia
           className={classes.media}
           image={faceShield}
@@ -119,7 +144,7 @@ function PPEItems(props) {
           action={<CheckCircleOutlineIcon color={color.faceShield} />}
         />
       </Card>
-      <Card className={classes.card} onClick={() => handleClick("gloves")}>
+      <Card variant="outlined" className={color["gloves"] === "action" ? classes.card : classes.clicked} onClick={() => handleClick("gloves")}>
         <CardMedia
           className={classes.media}
           image={gloves}
@@ -131,7 +156,7 @@ function PPEItems(props) {
           action={<CheckCircleOutlineIcon color={color.gloves} />}
         />
       </Card>
-      <Card className={classes.card} onClick={() => handleClick("coverall")}>
+      <Card variant="outlined" className={color["coverall"] === "action" ? classes.card : classes.clicked} onClick={() => handleClick("coverall")}>
         <CardMedia
           className={classes.media}
           image={coverall}

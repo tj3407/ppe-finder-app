@@ -66,7 +66,7 @@ function DonateToOrgPage(props) {
           title={
             <Typography variant="h6">
               <LocalHospitalIcon className={classes.icon} />{" "}
-              {orgDetails.orgName.structured_formatting.main_text}
+              {(orgDetails.orgName && orgDetails.orgName.structured_formatting && orgDetails.orgName.structured_formatting.main_text) || orgDetails.orgName || ""}
             </Typography>
           }
         />
@@ -78,7 +78,7 @@ function DonateToOrgPage(props) {
             </Grid>
             <div>
               <Typography variant="body1">
-                {orgDetails.orgAddress.formatted_address}
+                {(orgDetails.orgAddress && orgDetails.orgAddress.formatted_address) || orgDetails.orgAddress || ""}
               </Typography>
               <Typography variant="body1">C/O: {orgDetails.contact}</Typography>
               <Typography variant="body1">

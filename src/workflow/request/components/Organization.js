@@ -19,6 +19,7 @@ function Organization(props) {
   const classes = useStyles();
   const [options, setOptions] = React.useState([]);
   const [value, setValue] = React.useState("");
+  const [orgValue, setOrgValue] = React.useState({});
   const [location, setLocation] = React.useState({lat: null, long: null});
   const timer = React.useRef();
 
@@ -45,6 +46,12 @@ function Organization(props) {
       data();
     }, 300);
     timer.current = delay;
+
+    if (props.org && !Object.keys(orgValue).length) {
+      props.org(value);
+    } else {
+      props.org(orgValue);
+    }
   }, [value]);
 
   const showPosition = (position) => {
@@ -60,10 +67,8 @@ function Organization(props) {
     setValue(value);
   };
 
-  const handleAutoCompletChange = (event, value) => {
-    if (props.org) {
-        props.org(value);
-    }
+  const handleAutoCompleteChange = (event, value) => {
+    setOrgValue(value);
   }
 
   return (
@@ -72,7 +77,7 @@ function Organization(props) {
         id="autocomplete"
         freeSolo
         options={options}
-        onChange={handleAutoCompletChange}
+        onChange={handleAutoCompleteChange}
         getOptionLabel={option => option.structured_formatting.main_text}
         renderOption={option => (
           <React.Fragment>
