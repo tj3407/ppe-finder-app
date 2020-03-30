@@ -12,10 +12,11 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    textAlign: "center",
     "& > *": {
       margin: theme.spacing(2)
-    }
+    },
+    margin: "auto",
+    maxWidth: 640
   },
   input: {
     margin: theme.spacing(2)
@@ -111,7 +112,7 @@ function RequestLayout() {
   };
 
   return (
-    <Grid className={classes.root}>
+    <Grid container justify="center" className={classes.root}>
       <Typography variant="h6" style={{ textAlign: "left", paddingLeft: 20 }}>
         Request for PPE
       </Typography>
@@ -130,7 +131,7 @@ function RequestLayout() {
         </Alert>
       </Snackbar>
       {currentPage === "ppe" && (
-        <Grid item xs={12} sm={8} style={{ margin: "auto" }}>
+        <Grid container justify="center">
           <PPEItems items={getItems} />
         </Grid>
       )}
