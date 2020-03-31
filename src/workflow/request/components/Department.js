@@ -29,6 +29,7 @@ function Department(props) {
     <Grid className={classes.input}>
       <TextField
         required
+        autoFocus
         className={classes.field}
         name="department"
         variant="outlined" 

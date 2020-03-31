@@ -20,6 +20,7 @@ function Contact(props) {
   return (
     <Grid item xs={12} className={classes.input}>
       <TextField
+        autoFocus
         fullWidth
         required
         label="Contact Name"

@@ -18,23 +18,20 @@ const useStyles = makeStyles(theme => ({
 function Organization(props) {
   const classes = useStyles();
   const [options, setOptions] = React.useState([]);
+  const [cityOptions, setCityOptions] = React.useState([]);
   const [value, setValue] = React.useState("");
+  const [cityValue, setCityValue] = React.useState("");
   const [orgValue, setOrgValue] = React.useState({});
-  const [location, setLocation] = React.useState({lat: null, long: null});
+  const [showOrgField, setShowOrgField] = React.useState(false);
+  const [location, setLocation] = React.useState({ lat: null, lng: null });
   const timer = React.useRef();
-
-  React.useEffect(() => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    }
-  }, [])
 
   React.useEffect(() => {
     if (!value) return;
 
     const data = async () => {
       const res = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&location=${location.lat},${location.long}&types=establishment&radius=50000&key=${process.env.REACT_APP_API_KEY}`,
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&location=${location.lat},${location.lng}&types=establishment&radius=50000&strictbounds&key=${process.env.REACT_APP_API_KEY}`,
         { "Access-Control-Allow-Origin": "*" }
       );
       const json = await res.json();
@@ -53,58 +50,134 @@ function Organization(props) {
   }, [value]);
 
   React.useEffect(() => {
+    if (!cityValue) return;
+
+    const data = async () => {
+      const res = await fetch(
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${cityValue}&types=(cities)&key=${process.env.REACT_APP_API_KEY}`,
+        { "Access-Control-Allow-Origin": "*" }
+      );
+      const json = await res.json();
+      setCityOptions(json.predictions);
+    };
+
+    clearTimeout(timer.current);
+    const delay = setTimeout(() => {
+      data();
+    }, 300);
+    timer.current = delay;
+  }, [cityValue]);
+
+  React.useEffect(() => {
     if (Object.keys(orgValue).length) {
       props.org(orgValue);
     }
-  }, [orgValue])
-
-  const showPosition = (position) => {
-    setLocation({
-        lat: position.coords.latitude,
-        long: position.coords.longitude
-    })
-  }
+  }, [orgValue]);
 
   const handleChange = event => {
-    const { value } = event.target;
-
-    setValue(value);
+    const { value, name } = event.target;
+    if (name === "city") {
+      setCityValue(value);
+    } else {
+      setValue(value);
+    }
   };
 
   const handleAutoCompleteChange = (event, value) => {
+    if (!value) return;
+
     setOrgValue(value);
-  }
+  };
+
+  const handleCityAutoCompleteChange = async (event, value) => {
+    if (!value) {
+      setShowOrgField(false);
+      return
+    };
+
+    const res = await fetch(
+      `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${value.place_id}&fields=geometry&key=${process.env.REACT_APP_API_KEY}`
+    );
+    const json = await res.json();
+
+    if (
+      json &&
+      json.result &&
+      json.result.geometry &&
+      json.result.geometry.location
+    ) {
+      setLocation(json.result.geometry.location);
+    }
+
+    setShowOrgField(true);
+  };
 
   return (
-    <Grid item xs={12} className={classes.input}>
-      <Autocomplete
-        id="autocomplete"
-        freeSolo
-        options={options}
-        onChange={handleAutoCompleteChange}
-        getOptionLabel={option => option.structured_formatting.main_text}
-        renderOption={option => (
-          <React.Fragment>
-            <Typography variant="body1">
-              {option.structured_formatting.main_text}{" "}
-              <small style={{ color: "gray" }}>
-                {option.structured_formatting.secondary_text}
-              </small>
-            </Typography>
-          </React.Fragment>
-        )}
-        renderInput={params => (
-          <TextField
-            required
-            fullWidth
-            {...params}
-            label="Organization"
-            variant="outlined"
-            onChange={handleChange}
-          />
-        )}
-      />
-    </Grid>
+    <React.Fragment>
+      <Grid item xs={12} className={classes.input}>
+        <Autocomplete
+          id="autocomplete"
+          freeSolo
+          options={cityOptions}
+          onChange={handleCityAutoCompleteChange}
+          getOptionLabel={option => option.description}
+          renderOption={option => (
+            <React.Fragment>
+              <Typography variant="body1">
+                {option.structured_formatting.main_text}{" "}
+                <small style={{ color: "gray" }}>
+                  {option.structured_formatting.secondary_text}
+                </small>
+              </Typography>
+            </React.Fragment>
+          )}
+          renderInput={params => (
+            <TextField
+              autoFocus
+              required
+              fullWidth
+              {...params}
+              label="Search City"
+              name="city"
+              variant="outlined"
+              onChange={handleChange}
+            />
+          )}
+        />
+      </Grid>
+
+      {showOrgField && <Grid item xs={12} className={classes.input}>
+        <Autocomplete
+          id="autocomplete"
+          freeSolo
+          options={options}
+          onChange={handleAutoCompleteChange}
+          getOptionLabel={option => option.structured_formatting.main_text}
+          renderOption={option => (
+            <React.Fragment>
+              <Typography variant="body1">
+                {option.structured_formatting.main_text}{" "}
+                <small style={{ color: "gray" }}>
+                  {option.structured_formatting.secondary_text}
+                </small>
+              </Typography>
+            </React.Fragment>
+          )}
+          renderInput={params => (
+            <TextField
+              required
+              fullWidth
+              autoFocus
+              {...params}
+              label="Search Workplace"
+              name="organization"
+              variant="outlined"
+              onChange={handleChange}
+            />
+          )}
+        />
+      </Grid>}
+    </React.Fragment>
   );
 }
 

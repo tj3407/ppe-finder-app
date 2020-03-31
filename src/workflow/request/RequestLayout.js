@@ -31,9 +31,11 @@ const useStyles = makeStyles(theme => ({
 function RequestLayout() {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = React.useState("ppe");
+  const [isDisabled, setIsDisabled] = React.useState(true);
   const [count, setCount] = React.useState(0);
   const [error, setError] = React.useState(null);
   const [success, setSuccess] = React.useState(false);
+  const [valueChange, setValueChange] = React.useState(false);
 
   const form = React.useRef({
     items: [],
@@ -56,8 +58,32 @@ function RequestLayout() {
     setCurrentPage(mapping[count]);
   }, [count]);
 
+  React.useEffect(() => {
+    let disabled;
+
+    switch (currentPage) {
+      case "ppe":
+        disabled = !form.current.items.length;
+        break;
+      case "organization":
+        disabled = !form.current.orgName;
+        break;
+      case "department":
+        disabled = !form.current.department;
+        break;
+      case "contact":
+        disabled = !form.current.contact;
+        break;
+      default:
+        break;
+    }
+
+    setIsDisabled(disabled);
+  }, [valueChange]);
+
   const getItems = ({ items }) => {
     form.current.items = items;
+    setValueChange(!valueChange);
   };
 
   const getOrgName = value => {
@@ -65,6 +91,7 @@ function RequestLayout() {
     if (value.place_id) {
       getOrgAddress(value.place_id);
     }
+    setValueChange(!valueChange);
   };
 
   const getOrgAddress = async id => {
@@ -77,6 +104,7 @@ function RequestLayout() {
 
   const getDepartment = value => {
     form.current.department = value;
+    setValueChange(!valueChange);
   };
 
   const getBuilding = value => {
@@ -85,11 +113,15 @@ function RequestLayout() {
 
   const getContact = value => {
     form.current.contact = value;
+    setValueChange(!valueChange);
   };
 
   const handleNext = event => {
     if (count !== Object.keys(mapping).length - 1) {
       setCount(count + 1);
+      if (currentPage !== "contact") {
+        setIsDisabled(true);
+      }
     }
   };
 
@@ -151,7 +183,7 @@ function RequestLayout() {
             <Button
               fullWidth
               size="large"
-              disabled={success}
+              disabled={isDisabled || success}
               color="primary"
               variant="contained"
               onClick={
