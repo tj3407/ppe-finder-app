@@ -49,10 +49,14 @@ function Organization(props) {
 
     if (props.org && !Object.keys(orgValue).length) {
       props.org(value);
-    } else {
-      props.org(orgValue);
     }
   }, [value]);
+
+  React.useEffect(() => {
+    if (Object.keys(orgValue).length) {
+      props.org(orgValue);
+    }
+  }, [orgValue])
 
   const showPosition = (position) => {
     setLocation({
