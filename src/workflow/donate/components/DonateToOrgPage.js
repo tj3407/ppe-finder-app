@@ -51,6 +51,7 @@ function DonateToOrgPage(props) {
   };
 
   React.useEffect(() => {
+    console.log(props.location.state)
     setOrgDetails(props.location.state);
   }, []);
 
@@ -58,7 +59,7 @@ function DonateToOrgPage(props) {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  return Object.keys(orgDetails).length ? (
+  return (orgDetails && Object.keys(orgDetails).length) ? (
     <Grid container justify="center" className={classes.root}>
       <Card variant="outlined" className={classes.card}>
         <CardHeader

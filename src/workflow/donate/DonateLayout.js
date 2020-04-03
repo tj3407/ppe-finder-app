@@ -2,14 +2,24 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { db } from "../../components/firebase/firebase";
-import { Grid, Paper, Typography, Divider, Button } from "@material-ui/core";
-import BusinessIcon from '@material-ui/icons/Business';
-import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+import {
+  Grid,
+  Paper,
+  Typography,
+  Divider,
+  Button,
+  TextField,
+  InputAdornment
+} from "@material-ui/core";
+import BusinessIcon from "@material-ui/icons/Business";
+import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import MapLayout from "../components/MapLayout";
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,6 +46,13 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     maxHeight: 40
+  },
+  input: {
+    backgroundColor: "white",
+    marginTop: 60
+    // position: "absolute",
+    // bottom: 200,
+    // width: "100%"
   }
 }));
 
@@ -66,14 +83,32 @@ function DonateLayout(props) {
 
   const handleClick = item => {
     props.history.push({
-        pathname: "/donate/org",
-        state: item
-    })
-  }
+      pathname: "/donate/org",
+      state: item
+    });
+  };
 
   return (
     <Grid container justify="center">
-      {data.length
+      <MapLayout data={data} {...props} />
+      <Grid item xs={12} sm={8} className={classes.root}>
+        <Grid container justify="center">
+          <TextField
+            fullWidth
+            placeholder="Enter City"
+            variant="outlined"
+            className={classes.input}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+      </Grid>
+      {/* {data.length
         ? data.map((item, index) => {
             const orgName = (item.orgName && item.orgName.structured_formatting && item.orgName.structured_formatting.main_text) || item.orgName || "";
             const orgAddress = (item.orgAddress && item.orgAddress.formatted_address) || item.orgAddress || "";
@@ -129,7 +164,7 @@ function DonateLayout(props) {
               </Grid>
             );
           })
-        : null}
+        : null} */}
     </Grid>
   );
 }
