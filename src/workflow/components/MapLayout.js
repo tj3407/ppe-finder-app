@@ -48,6 +48,12 @@ function MapLayout(props) {
   const [state, setState] = React.useState({ showWindow: false, marker: {} });
   const [showChild, setShowChild] = React.useState(false);
 
+  React.useEffect(() => {
+    if (props.cityLocation) {
+      setPosition(props.cityLocation);
+    }
+  }, [props.cityLocation])
+
   const handleClick = (props, marker, e) => {
     setState({ showWindow: true, marker });
     console.log(props, marker);
@@ -90,7 +96,7 @@ function MapLayout(props) {
       <Grid item xs={12}>
         <Map
           google={props.google}
-          zoom={10}
+          zoom={9}
           className={classes.map}
           center={position}
         >

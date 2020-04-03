@@ -83,7 +83,7 @@ const CardItem = props => {
     }
   };
   return (
-    <Card style={{ height: 240, padding: 20 }}>
+    <Card style={{ height: 240, padding: 20 }} variant="outlined">
       <CardContent style={{ height: 160 }}>
         {props.title === "FRONTLINERS" ? <LocalHospitalIcon /> : <GroupIcon />}
         <Typography variant="h6" gutterBottom style={{ fontWeight: "bold" }}>

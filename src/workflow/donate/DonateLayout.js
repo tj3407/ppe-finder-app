@@ -19,7 +19,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import MapLayout from "../components/MapLayout";
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from "@material-ui/icons/Search";
+import CityField from "../components/CityField";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,6 +60,10 @@ const useStyles = makeStyles(theme => ({
 function DonateLayout(props) {
   const classes = useStyles();
   const [data, setData] = React.useState([]);
+  const [location, setLocation] = React.useState({
+    lat: 37.354107,
+    lng: -121.955238
+  });
 
   const itemMapping = {
     n95: "N95 Face Mask",
@@ -88,10 +93,15 @@ function DonateLayout(props) {
     });
   };
 
+  const handleSetLocation = location => {
+    setLocation(location);
+  };
+
   return (
     <Grid container justify="center">
-      <MapLayout data={data} {...props} />
-      <Grid item xs={12} sm={8} className={classes.root}>
+      <MapLayout data={data} cityLocation={location} {...props} />
+      <CityField setLocation={handleSetLocation} />
+      {/* <Grid item xs={12} sm={8} className={classes.root}>
         <Grid container justify="center">
           <TextField
             fullWidth
@@ -106,8 +116,8 @@ function DonateLayout(props) {
               ),
             }}
           />
-        </Grid>
-      </Grid>
+        </Grid> */}
+      {/* </Grid> */}
       {/* {data.length
         ? data.map((item, index) => {
             const orgName = (item.orgName && item.orgName.structured_formatting && item.orgName.structured_formatting.main_text) || item.orgName || "";
