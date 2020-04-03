@@ -75,7 +75,7 @@ function CityField(props) {
   };
 
   return (
-    <React.Fragment>
+    <div className={props.classes}>
         <Grid item xs={12} sm={8} className={classes.input}>
             <Autocomplete
                 id="autocomplete"
@@ -108,7 +108,7 @@ function CityField(props) {
                 )}
             />
         </Grid>
-    </React.Fragment>
+    </div>
   );
 }
 

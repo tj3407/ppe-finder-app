@@ -54,6 +54,12 @@ const useStyles = makeStyles(theme => ({
     // position: "absolute",
     // bottom: 200,
     // width: "100%"
+  },
+  cityField: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    width: "75%"
   }
 }));
 
@@ -100,7 +106,7 @@ function DonateLayout(props) {
   return (
     <Grid container justify="center">
       <MapLayout data={data} cityLocation={location} {...props} />
-      <CityField setLocation={handleSetLocation} />
+      <CityField setLocation={handleSetLocation} classes={classes.cityField} />
       {/* <Grid item xs={12} sm={8} className={classes.root}>
         <Grid container justify="center">
           <TextField
