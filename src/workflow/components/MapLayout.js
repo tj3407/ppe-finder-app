@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
-import { Grid, Paper, Typography, Divider, Button } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import CardContainer from "../../workflow/donate/components/CardContainer";
 
 
@@ -46,7 +45,6 @@ function MapLayout(props) {
     lng: -121.955238
   });
   const [state, setState] = React.useState({ showWindow: false, marker: {} });
-  const [showChild, setShowChild] = React.useState(false);
 
   React.useEffect(() => {
     if (props.cityLocation) {
@@ -56,11 +54,6 @@ function MapLayout(props) {
 
   const handleClick = (props, marker, e) => {
     setState({ showWindow: true, marker });
-    console.log(props, marker);
-  };
-
-  const handleOnOpen = e => {
-    setShowChild(true);
   };
 
   const handleOnClose = e => {
@@ -87,7 +80,6 @@ function MapLayout(props) {
             DONATE
           </Button>
     )
-    // const button = (<button onClick={e => {console.log("hmapbuttoni1");}}>mapbutton</button>);
     ReactDOM.render(React.Children.only(button), document.getElementById("iwc"));
   }
 

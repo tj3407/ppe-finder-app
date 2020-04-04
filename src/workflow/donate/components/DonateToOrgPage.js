@@ -9,6 +9,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import { labelMapping } from "../../../metadata/mappings";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,23 +36,9 @@ const useStyles = makeStyles(theme => ({
 function DonateToOrgPage(props) {
   const classes = useStyles();
   const [orgDetails, setOrgDetails] = React.useState({});
-  const [state, setState] = React.useState({
-    n95: false,
-    "face mask": false,
-    "face shield": false,
-    gloves: false,
-    coverall: false
-  });
-  const itemMapping = {
-    n95: "N95 Face Mask",
-    "face mask": "Face Mask",
-    "face shield": "Face Shield",
-    gloves: "Gloves",
-    coverall: "Coveralls"
-  };
+  const [state, setState] = React.useState({});
 
   React.useEffect(() => {
-    console.log(props.location.state)
     setOrgDetails(props.location.state);
   }, []);
 
@@ -103,12 +90,12 @@ function DonateToOrgPage(props) {
                   key={item}
                   control={
                     <Checkbox
-                      checked={state[item]}
+                      // checked={state[item]}
                       onChange={handleChange}
                       name={item}
                     />
                   }
-                  label={itemMapping[item]}
+                  label={labelMapping[item]}
                 />
               );
             })}

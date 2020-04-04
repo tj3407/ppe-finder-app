@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Paper } from "@material-ui/core";
+import { labelMapping } from "../../../metadata/mappings";
 
 const useStyles = makeStyles(theme => ({
   input: {
@@ -36,14 +37,6 @@ function ConfirmationPage(props) {
     orgAddress: "Organization Address"
   };
 
-  const itemMapping = {
-    "n95": "N95 Face Mask",
-    "face mask": "Face Mask",
-    "face shield": "Face Shield",
-    "gloves": "Gloves",
-    "coverall": "Coveralls"
-  };
-
   return (
     <Grid item xs={12} className={classes.input}>
         {Object.keys(props.form).map(key => {
@@ -64,7 +57,7 @@ function ConfirmationPage(props) {
                                 variant="body1"
                                 className={classes.prod}
                                 >
-                                {itemMapping[item]}{" "}
+                                {labelMapping[item]}{" "}
                                 </Typography>
                             </Grid>
                         );
