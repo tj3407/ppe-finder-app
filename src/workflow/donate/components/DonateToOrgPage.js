@@ -42,17 +42,22 @@ const useStyles = makeStyles(theme => ({
 function DonateToOrgPage(props) {
   const classes = useStyles();
   const [orgDetails, setOrgDetails] = React.useState({});
-  const [state, setState] = React.useState({});
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [state, setState] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [placement, setPlacement] = React.useState();
 
   React.useEffect(() => {
     setOrgDetails(props.location.state);
   }, []);
 
   const handleChange = event => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    const index = state.indexOf(event.target.name);
+
+    if (event.target.checked && index === -1) {
+      setState([...state, event.target.name]);
+    } else if (!event.target.checked && index > -1) {
+      state.splice(index, 1);
+      setState(state);
+    }
   };
 
   const handleSelfVolunteerClick = name => event => {
@@ -71,7 +76,7 @@ function DonateToOrgPage(props) {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <SelfVolunteer orgDetails={orgDetails} onClose={handleClose} />
+        <SelfVolunteer orgDetails={orgDetails} onClose={handleClose} itemsToDonate={state} />
       </Modal>  
       <Card variant="outlined" className={classes.card}>
         <CardHeader
