@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Button, Typography, Divider } from "@material-ui/core";
+import { Grid, Button, Typography, Divider, Paper } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,6 +10,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import { labelMapping } from "../../../metadata/mappings";
+import Modal from '@material-ui/core/Modal';
+import SelfVolunteer from "./SelfVolunteer";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +32,10 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     verticalAlign: "middle"
+  },
+  popper: {
+    position: "absolute",
+    top: "50%"
   }
 }));
 
@@ -37,6 +43,9 @@ function DonateToOrgPage(props) {
   const classes = useStyles();
   const [orgDetails, setOrgDetails] = React.useState({});
   const [state, setState] = React.useState({});
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
 
   React.useEffect(() => {
     setOrgDetails(props.location.state);
@@ -46,8 +55,24 @@ function DonateToOrgPage(props) {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const handleSelfVolunteerClick = name => event => {
+    setOpen(true);
+  }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (orgDetails && Object.keys(orgDetails).length) ? (
     <Grid container justify="center" className={classes.root}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <SelfVolunteer orgDetails={orgDetails} onClose={handleClose} />
+      </Modal>  
       <Card variant="outlined" className={classes.card}>
         <CardHeader
           disableTypography
@@ -109,6 +134,7 @@ function DonateToOrgPage(props) {
               variant="contained"
               color="primary"
               className={classes.button}
+              onClick={handleSelfVolunteerClick("top")}
             >
               I can bring it in
             </Button>
