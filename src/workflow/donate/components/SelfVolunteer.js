@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
+import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import { labelMapping } from "../../../metadata/mappings";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   modal: {
-    maxWidth: "75%",
+    maxWidth: 640,
     position: "relative",
     margin: "auto",
     top: 40,
@@ -39,12 +40,20 @@ const useStyles = makeStyles((theme) => ({
   },
   items: {
     marginBottom: 20,
+    textAlign: "left",
+    margin: "auto",
   },
   closeButton: {
     position: "absolute",
     right: 10,
     top: 10,
   },
+  italic: {
+    fontStyle: "italic"
+  },
+  bold: {
+    fontWeight: "bold"
+  }
 }));
 
 const SelfVolunteer = React.forwardRef((props, ref) => {
@@ -58,6 +67,19 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
     }, 3000);
   };
 
+  const orgName =
+    (props.orgDetails.orgName &&
+      props.orgDetails.orgName.structured_formatting &&
+      props.orgDetails.orgName.structured_formatting.main_text) ||
+    props.orgDetails.orgName ||
+    "";
+
+  const orgAddress =
+    (props.orgDetails.orgAddress &&
+      props.orgDetails.orgAddress.formatted_address) ||
+    props.orgDetails.orgAddress ||
+    "";
+
   return (
     <Paper className={classes.modal}>
       <Grid container justify="center" className={classes.root}>
@@ -70,17 +92,19 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
             color="secondary"
             className={classes.typography}
           >
-            You're Awesome!
+            Confirm Delivery To
           </Typography>
+          <Typography varian="caption" className={classes.bold}>{orgName}</Typography>
+          <Typography varian="caption" className={classes.italic}><RoomOutlinedIcon color="secondary" className={classes.icon} />{orgAddress}</Typography>
           <Divider className={classes.divider} />
-          <Typography paragraph color="secondary">
+          <Typography paragraph>
             Click confirm to notify the requesting party that the item(s) below
             are on their way!
           </Typography>
           {props.itemsToDonate.length &&
             props.itemsToDonate.map((item) => {
               return (
-                <Grid item xs={12} key={item} className={classes.items}>
+                <Grid item xs={12} sm={4} key={item} className={classes.items}>
                   <CheckBoxOutlinedIcon
                     color="secondary"
                     className={classes.icon}
@@ -91,8 +115,11 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
                 </Grid>
               );
             })}
-          <Typography paragraph color="secondary">
-            Thank you for your donation!{" "}
+          <Typography paragraph display="inline">
+            Thank you for your donation.{" "}
+          </Typography>
+          <Typography paragraph color="secondary" display="inline">
+            You're awesome!
           </Typography>
         </Grid>
         <Grid item xs={12} sm={4} className={classes.button}>

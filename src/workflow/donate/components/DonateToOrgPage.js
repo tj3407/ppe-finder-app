@@ -10,33 +10,36 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import { labelMapping } from "../../../metadata/mappings";
-import Modal from '@material-ui/core/Modal';
+import Modal from "@material-ui/core/Modal";
 import SelfVolunteer from "./SelfVolunteer";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   divider: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
   },
   button: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   title: {
     marginBottom: theme.spacing(2),
-    fontStyle: "italic"
+    fontStyle: "italic",
   },
   card: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   icon: {
-    verticalAlign: "middle"
+    verticalAlign: "middle",
   },
   popper: {
     position: "absolute",
-    top: "50%"
-  }
+    top: "50%",
+  },
+  modal: {
+    margin: theme.spacing(2),
+  },
 }));
 
 function DonateToOrgPage(props) {
@@ -49,42 +52,52 @@ function DonateToOrgPage(props) {
     setOrgDetails(props.location.state);
   }, []);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const index = state.indexOf(event.target.name);
 
     if (event.target.checked && index === -1) {
       setState([...state, event.target.name]);
     } else if (!event.target.checked && index > -1) {
       state.splice(index, 1);
-      setState(state);
+      const modifiedArr = state;
+      setState([...modifiedArr]);
     }
   };
 
-  const handleSelfVolunteerClick = name => event => {
+  const handleSelfVolunteerClick = (event) => {
     setOpen(true);
-  }
+  };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  return (orgDetails && Object.keys(orgDetails).length) ? (
+  return orgDetails && Object.keys(orgDetails).length ? (
     <Grid container justify="center" className={classes.root}>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        className={classes.modal}
       >
-        <SelfVolunteer orgDetails={orgDetails} onClose={handleClose} itemsToDonate={state} />
-      </Modal>  
+        <SelfVolunteer
+          orgDetails={orgDetails}
+          onClose={handleClose}
+          itemsToDonate={state}
+        />
+      </Modal>
       <Card variant="outlined" className={classes.card}>
         <CardHeader
           disableTypography
           title={
             <Typography variant="h6">
               <LocalHospitalIcon className={classes.icon} />{" "}
-              {(orgDetails.orgName && orgDetails.orgName.structured_formatting && orgDetails.orgName.structured_formatting.main_text) || orgDetails.orgName || ""}
+              {(orgDetails.orgName &&
+                orgDetails.orgName.structured_formatting &&
+                orgDetails.orgName.structured_formatting.main_text) ||
+                orgDetails.orgName ||
+                ""}
             </Typography>
           }
         />
@@ -96,7 +109,10 @@ function DonateToOrgPage(props) {
             </Grid>
             <div>
               <Typography variant="body1">
-                {(orgDetails.orgAddress && orgDetails.orgAddress.formatted_address) || orgDetails.orgAddress || ""}
+                {(orgDetails.orgAddress &&
+                  orgDetails.orgAddress.formatted_address) ||
+                  orgDetails.orgAddress ||
+                  ""}
               </Typography>
               <Typography variant="body1">C/O: {orgDetails.contact}</Typography>
               <Typography variant="body1">
@@ -114,7 +130,7 @@ function DonateToOrgPage(props) {
                 I am donating the following:
               </Typography>
             </Grid>
-            {orgDetails.items.map(item => {
+            {orgDetails.items.map((item) => {
               return (
                 <FormControlLabel
                   key={item}
@@ -136,14 +152,20 @@ function DonateToOrgPage(props) {
           <Grid item xs={12}>
             <Button
               fullWidth
+              disabled={state.length === 0}
               variant="contained"
               color="primary"
               className={classes.button}
-              onClick={handleSelfVolunteerClick("top")}
+              onClick={handleSelfVolunteerClick}
             >
               I can bring it in
             </Button>
-            <Button fullWidth variant="contained" color="secondary">
+            <Button
+              fullWidth
+              disabled={state.length === 0}
+              variant="contained"
+              color="secondary"
+            >
               Request a Volunteer Courier
             </Button>
           </Grid>
