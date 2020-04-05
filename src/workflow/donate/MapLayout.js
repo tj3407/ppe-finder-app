@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import { Grid, Button } from "@material-ui/core";
-import CardContainer from "../../workflow/donate/components/CardContainer";
+import CardContainer from "./components/CardContainer";
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2)
   },
   root: {
-    margin: theme.spacing(2)
+    padding: theme.spacing(2)
   },
   divider: {
     margin: theme.spacing(2)

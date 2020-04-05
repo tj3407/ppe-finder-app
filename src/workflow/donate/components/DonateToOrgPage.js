@@ -12,10 +12,13 @@ import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import { labelMapping } from "../../../metadata/mappings";
 import Modal from "@material-ui/core/Modal";
 import SelfVolunteer from "./SelfVolunteer";
+import RequestVolunteer from "./RequestVolunteer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(4),
+    maxWidth: 640,
+    margin: "auto"
   },
   divider: {
     margin: theme.spacing(2),
@@ -47,6 +50,7 @@ function DonateToOrgPage(props) {
   const [orgDetails, setOrgDetails] = React.useState({});
   const [state, setState] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [clickedBtn, setClickedBtn] = React.useState("");
 
   React.useEffect(() => {
     setOrgDetails(props.location.state);
@@ -64,11 +68,18 @@ function DonateToOrgPage(props) {
     }
   };
 
-  const handleSelfVolunteerClick = (event) => {
+  const handleClick = (name) => (event) => {
+    if (name === "self-volunteer") {
+      setClickedBtn("self-volunteer");
+    } else {
+      setClickedBtn("third-party");
+    }
+
     setOpen(true);
   };
 
   const handleClose = () => {
+    setClickedBtn("");
     setOpen(false);
   };
 
@@ -81,18 +92,27 @@ function DonateToOrgPage(props) {
         aria-describedby="simple-modal-description"
         className={classes.modal}
       >
-        <SelfVolunteer
-          orgDetails={orgDetails}
-          onClose={handleClose}
-          itemsToDonate={state}
-        />
+        <>
+          <SelfVolunteer
+            show={clickedBtn === "self-volunteer"}
+            orgDetails={orgDetails}
+            onClose={handleClose}
+            itemsToDonate={state}
+          />
+          <RequestVolunteer
+            show={clickedBtn === "third-party"}
+            orgDetails={orgDetails}
+            onClose={handleClose}
+            itemsToDonate={state}
+          />
+        </>
       </Modal>
       <Card variant="outlined" className={classes.card}>
         <CardHeader
           disableTypography
           title={
-            <Typography variant="h6">
-              <LocalHospitalIcon className={classes.icon} />{" "}
+            <Typography variant="h6" color="secondary">
+              <LocalHospitalIcon color="secondary" className={classes.icon} />{" "}
               {(orgDetails.orgName &&
                 orgDetails.orgName.structured_formatting &&
                 orgDetails.orgName.structured_formatting.main_text) ||
@@ -105,7 +125,7 @@ function DonateToOrgPage(props) {
         <CardContent>
           <Grid container justify="space-between">
             <Grid item xs={12} className={classes.title}>
-              <Typography variant="body1">Recipient:</Typography>
+              <Typography variant="body1" color="secondary">Recipient:</Typography>
             </Grid>
             <div>
               <Typography variant="body1">
@@ -126,7 +146,7 @@ function DonateToOrgPage(props) {
           <Divider className={classes.divider} />
           <Grid container justify="space-between">
             <Grid item xs={12}>
-              <Typography variant="body1" className={classes.title}>
+              <Typography variant="body1" className={classes.title} color="secondary">
                 I am donating the following:
               </Typography>
             </Grid>
@@ -152,19 +172,22 @@ function DonateToOrgPage(props) {
           <Grid item xs={12}>
             <Button
               fullWidth
+              disableElevation
               disabled={state.length === 0}
               variant="contained"
               color="primary"
               className={classes.button}
-              onClick={handleSelfVolunteerClick}
+              onClick={handleClick("self-volunteer")}
             >
               I can bring it in
             </Button>
             <Button
               fullWidth
+              disableElevation
               disabled={state.length === 0}
               variant="contained"
               color="secondary"
+              onClick={handleClick("third-party")}
             >
               Request a Volunteer Courier
             </Button>

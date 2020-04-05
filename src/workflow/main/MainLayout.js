@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     textAlign: "center",
     "& > *": {
-      margin: theme.spacing(2)
+      margin: theme.spacing(2),
+      marginTop: theme.spacing(6)
     }
   },
   button: {
@@ -25,6 +26,19 @@ const useStyles = makeStyles(theme => ({
     color: "green",
     fontWeight: "bold",
     fontFamily: "Merienda, cursive"
+  },
+  description: {
+    textAlign: "justify",
+    color: "white",
+    backgroundColor: "#f50057",
+    padding: theme.spacing(8),
+    margin: "0px",
+    marginTop: theme.spacing(14)
+  },
+  card: {
+    height: 240, 
+    padding: 20,
+    border: "0px"
   }
 }));
 
@@ -57,23 +71,24 @@ const MainLayout = props => {
           Donate
         </CardItem>
       </Grid>
-      <Grid item xs={12} md={8} style={{ textAlign: "justify" }}>
-        <Typography variant="body1" color="inherit">
-          During this time of need, it is more important than ever to support
-          the brave people who are in the frontline in the fight against
-          COVID-19. This site was developed to leverage the power of
-          volunteerism and community. We believe that people do care and are
-          willing to help others in uncertain times so we created a platform for
-          citizens or organizations to donate the necessary supplies that are
-          needed to help protect the people that are directly fighting this
-          global pandemic. Together we can beat this!
-        </Typography>
-      </Grid>
+        <Grid item xs={12} className={classes.description}>
+          <Typography variant="subtitle1" color="inherit">
+            During this time of need, it is more important than ever to support
+            the brave people who are in the frontline in the fight against
+            COVID-19. This site was developed to leverage the power of
+            volunteerism and community. We believe that people do care and are
+            willing to help others in uncertain times so we created a platform for
+            citizens or organizations to donate the necessary supplies that are
+            needed to help protect the people that are directly fighting this
+            global pandemic. Together we can beat this!
+          </Typography>
+        </Grid>
     </Grid>
   );
 };
 
 const CardItem = props => {
+  const classes = useStyles();
   const handleClick = event => {
     const { name } = event.currentTarget;
     if (name === "CITIZENS") {
@@ -83,7 +98,7 @@ const CardItem = props => {
     }
   };
   return (
-    <Card style={{ height: 240, padding: 20 }} variant="outlined">
+    <Card variant="outlined" className={classes.card}>
       <CardContent style={{ height: 160 }}>
         {props.title === "FRONTLINERS" ? <LocalHospitalIcon /> : <GroupIcon />}
         <Typography variant="h6" gutterBottom style={{ fontWeight: "bold" }}>
@@ -96,6 +111,7 @@ const CardItem = props => {
       <CardActions>
         <Grid container justify="center">
           <Button
+            size="large"
             disableElevation
             variant="contained"
             name={props.title}

@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { db } from "../../components/firebase/firebase";
 import { Grid } from "@material-ui/core";
 
-import MapLayout from "../components/MapLayout";
-import CityField from "../components/CityField";
+import MapLayout from "./MapLayout";
+import CityField from "../../components/fields/CityField";
 
 const useStyles = makeStyles((theme) => ({
   cityField: {

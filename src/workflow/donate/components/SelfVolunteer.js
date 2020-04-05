@@ -25,9 +25,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     margin: "auto",
     top: 40,
+    overflow: "auto"
   },
   divider: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     width: "100%",
     backgroundColor: "#f50057",
   },
@@ -80,7 +82,7 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
     props.orgDetails.orgAddress ||
     "";
 
-  return (
+  return props.show ? (
     <Paper className={classes.modal}>
       <Grid container justify="center" className={classes.root}>
         <IconButton onClick={props.onClose} className={classes.closeButton}>
@@ -92,13 +94,16 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
             color="secondary"
             className={classes.typography}
           >
-            Confirm Delivery To
+            Confirm Drop Off To
           </Typography>
-          <Typography varian="caption" className={classes.bold}>{orgName}</Typography>
-          <Typography varian="caption" className={classes.italic}><RoomOutlinedIcon color="secondary" className={classes.icon} />{orgAddress}</Typography>
+          <Typography variant="body1" className={classes.bold}>{orgName}</Typography>
+          <Typography variant="body1" className={classes.italic}><RoomOutlinedIcon color="secondary" className={classes.icon} />{orgAddress}</Typography>
+          <Typography variant="body1" className={classes.italic}>Department: {props.orgDetails.department}</Typography>
+          <Typography variant="body1" className={classes.italic}>Building: {props.orgDetails.building}</Typography>
+          <Typography variant="body1" className={classes.italic}>C/O: {props.orgDetails.contact}</Typography>
           <Divider className={classes.divider} />
-          <Typography paragraph>
-            Click confirm to notify the requesting party that the item(s) below
+          <Typography paragraph display="inline">
+            Click <Typography variant="caption" color="secondary" display="inline">CONFIRM</Typography> to notify the requesting party that the item(s) below
             are on their way!
           </Typography>
           {props.itemsToDonate.length &&
@@ -138,7 +143,7 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
         </Grid>
       </Grid>
     </Paper>
-  );
+  ) : null;
 });
 
 export default React.memo(SelfVolunteer);

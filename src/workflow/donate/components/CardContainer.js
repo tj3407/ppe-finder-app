@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     maxHeight: 40,
   },
+  alignRight: {
+    textAlign: "right"
+  }
 }));
 
 const CardContainer = (props) => {
@@ -92,7 +95,7 @@ const CardContainer = (props) => {
                 props.item.items.length &&
                 props.item.items.map((product) => {
                   return (
-                    <Grid item xs={12} key={product}>
+                    <Grid item xs={12} key={product} className={classes.alignRight}>
                       <Typography variant="caption">
                         {labelMapping[product]}
                       </Typography>

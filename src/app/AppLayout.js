@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
-import { Grid, Typography, Divider, Link } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { HashRouter, BrowserRouter, Route } from "react-router-dom";
-import SupervisedUserCircleOutlinedIcon from '@material-ui/icons/SupervisedUserCircleOutlined';
+import { HashRouter, Route } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AppHeader from "./components/AppHeader";
 
 const RequestLayout = React.lazy(() => import("../workflow/request/RequestLayout"));
 const DonateLayout = React.lazy(() => import("../workflow/donate/DonateLayout"));
@@ -11,10 +11,14 @@ const MainLayout = React.lazy(() => import("../workflow/main/MainLayout"));
 const DonateToOrgPage = React.lazy(() => import("../workflow/donate/components/DonateToOrgPage"));
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: "#f50057"
+  },
   h4: {
     fontWeight: "bold",
     fontFamily: "Overlock SC, cursive",
-    padding: 10
+    padding: 10,
+    color: "white"
   },
   link: {
     textDecoration: "none !important"
@@ -33,16 +37,10 @@ function AppLayout() {
 
   return (
     <React.Fragment>
-      <Grid container justify="flex-start">
-        <Link href="/ppe-finder-app" className={classes.link}>
-          <Typography variant="h4" className={classes.h4}>
-            D<SupervisedUserCircleOutlinedIcon />nate PPE
-          </Typography>
-        </Link>
-      </Grid>
+      <AppHeader />
       <Divider style={{ width: "100%" }} />
       <HashRouter basename="/">
-        <Suspense fallback={<Grid item xs={12} className={classes.loader}><CircularProgress className={classes.progress} /></Grid>}>
+        <Suspense fallback={<Grid item xs={12} className={classes.loader}><CircularProgress color="secondary" className={classes.progress} /></Grid>}>
           <Route
             exacts
             exact
