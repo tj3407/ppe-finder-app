@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 640,
     position: "relative",
     margin: "auto",
-    top: 40,
-    textAlign: "center",
+    textAlign: "center"
   },
   divider: {
     marginTop: theme.spacing(2),
@@ -105,7 +104,7 @@ function RequestVolunteer(props) {
   };
 
   return props.show ? (
-    <Paper className={classes.modal}>
+    <Paper className={classes.modal} variant="outlined">
       <Grid container justify="center" className={classes.root}>
         <IconButton onClick={props.onClose} className={classes.closeButton}>
           <CloseIcon color="secondary" />

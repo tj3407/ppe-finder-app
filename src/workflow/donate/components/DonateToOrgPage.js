@@ -13,6 +13,8 @@ import { labelMapping } from "../../../metadata/mappings";
 import Modal from "@material-ui/core/Modal";
 import SelfVolunteer from "./SelfVolunteer";
 import RequestVolunteer from "./RequestVolunteer";
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
   },
 }));
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function DonateToOrgPage(props) {
   const classes = useStyles();
@@ -85,13 +91,7 @@ function DonateToOrgPage(props) {
 
   return orgDetails && Object.keys(orgDetails).length ? (
     <Grid container justify="center" className={classes.root}>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        className={classes.modal}
-      >
+      <Dialog fullScreen onClose={handleClose} open={open} TransitionComponent={Transition} style={{ backgroundColor: "rgba(255, 255, 255, 0.5)"}}>
         <>
           <SelfVolunteer
             show={clickedBtn === "self-volunteer"}
@@ -106,7 +106,7 @@ function DonateToOrgPage(props) {
             itemsToDonate={state}
           />
         </>
-      </Modal>
+      </Dialog>
       <Card variant="outlined" className={classes.card}>
         <CardHeader
           disableTypography
