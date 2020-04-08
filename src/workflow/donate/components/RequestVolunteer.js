@@ -27,8 +27,9 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     maxWidth: 640,
     position: "relative",
+    margin: theme.spacing(2),
     margin: "auto",
-    textAlign: "center"
+    textAlign: "center",
   },
   divider: {
     marginTop: theme.spacing(2),
