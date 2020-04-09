@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "56.25%", // 16:9
   },
   clicked: {
-    border: "solid 2px green",
+    border: "solid 2px #f50057",
     width: 200,
     margin: theme.spacing(2),
     cursor: "pointer",
@@ -43,7 +43,7 @@ function PPEItems(props) {
 
     setColor({
       ...color,
-      [product.label]: product.selected ? "primary" : "action"
+      [product.label]: product.selected ? "secondary" : "action"
     })
 
     if (!product.selected && items.current.includes(product.label)) {

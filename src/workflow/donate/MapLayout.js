@@ -74,7 +74,7 @@ function MapLayout(props) {
             fullWidth
             disableElevation
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={handleInfoWindowClick}
           >
             DONATE

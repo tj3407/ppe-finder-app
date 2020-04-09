@@ -50,6 +50,7 @@ const CardContainer = (props) => {
     (props.item.orgName &&
       props.item.orgName.structured_formatting &&
       props.item.orgName.structured_formatting.main_text) ||
+      props.item.orgName && props.item.orgName.name ||
     props.item.orgName ||
     "";
   const orgAddress =
@@ -112,7 +113,7 @@ const CardContainer = (props) => {
               fullWidth
               disableElevation
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={props.onClick}
             >
               DONATE

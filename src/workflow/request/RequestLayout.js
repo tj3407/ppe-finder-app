@@ -182,9 +182,10 @@ function RequestLayout() {
           <Grid item xs={12} style={{ marginRight: 16, marginLeft: 16 }}>
             <Button
               fullWidth
+              disableElevation
               size="large"
               disabled={isDisabled || success}
-              color="primary"
+              color="secondary"
               variant="contained"
               onClick={
                 currentPage !== "confirmation" ? handleNext : handleSubmit

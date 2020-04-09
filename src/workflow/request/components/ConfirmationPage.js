@@ -70,7 +70,8 @@ function ConfirmationPage(props) {
           }
 
           if (key === "orgName") {
-            const value = (props.form[key] && props.form[key].structured_formatting && props.form[key].structured_formatting.main_text) || props.form[key] || "";
+            // const value = (props.form[key] && props.form[key].structured_formatting && props.form[key].structured_formatting.main_text) || props.form[key] || "";
+            const value = (props.form[key] && props.form[key].name) || props.form[key] || "";
             return (
                 <React.Fragment key={key}>
                   <Paper variant="outlined" className={classes.paper}>

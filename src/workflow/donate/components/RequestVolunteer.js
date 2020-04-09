@@ -76,6 +76,7 @@ function RequestVolunteer(props) {
     (props.orgDetails.orgName &&
       props.orgDetails.orgName.structured_formatting &&
       props.orgDetails.orgName.structured_formatting.main_text) ||
+      (props.orgDetails.orgName && props.orgDetails.orgName.name) ||
     props.orgDetails.orgName ||
     "";
 

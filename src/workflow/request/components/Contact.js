@@ -26,6 +26,7 @@ function Contact(props) {
         label="Contact Name"
         variant="outlined"
         onChange={handleChange}
+        color="secondary"
       />
     </Grid>
   );

@@ -36,6 +36,7 @@ function Department(props) {
         fullWidth 
         label="Department Name"
         onChange={handleChange}
+        color="secondary"
       />
       <TextField
         className={classes.field}
@@ -44,6 +45,7 @@ function Department(props) {
         fullWidth 
         label="Building Number/Name (Optional)"
         onChange={handleChange}
+        color="secondary"
       />
     </Grid>
   );

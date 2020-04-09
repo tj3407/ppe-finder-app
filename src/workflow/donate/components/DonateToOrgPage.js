@@ -116,6 +116,7 @@ function DonateToOrgPage(props) {
               {(orgDetails.orgName &&
                 orgDetails.orgName.structured_formatting &&
                 orgDetails.orgName.structured_formatting.main_text) ||
+                (orgDetails.orgName && orgDetails.orgName.name) ||
                 orgDetails.orgName ||
                 ""}
             </Typography>

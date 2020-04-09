@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,8 +22,10 @@ const useStyles = makeStyles(theme => ({
 
 function CityField(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
   const [cityOptions, setCityOptions] = React.useState([]);
   const [cityValue, setCityValue] = React.useState("");
+  const loading = open && cityOptions.length === 0;
 
   const [location, setLocation] = React.useState({ lat: null, lng: null });
   const timer = React.useRef();
@@ -46,14 +49,30 @@ function CityField(props) {
     timer.current = delay;
   }, [cityValue]);
 
+  React.useEffect(() => {
+    if (!open) {
+      setCityOptions([]);
+    }
+  }, [open]);
+
   const handleChange = event => {
     const { value } = event.target;
+
+    if (!value) {
+      setCityOptions([]);
+      return;
+    }
 
     setCityValue(value);
   };
 
   const handleCityAutoCompleteChange = async (event, value) => {
-    if (!value) return;
+    if (!value) {
+      if (props.setLocation) {
+        props.setLocation({});
+      }
+      return;
+    };
 
     const res = await fetch(
       `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${value.place_id}&fields=geometry&key=${process.env.REACT_APP_API_KEY}`
@@ -76,10 +95,17 @@ function CityField(props) {
 
   return (
     <div className={props.classes}>
-        <Grid item xs={12} sm={8} className={classes.input}>
+        <Grid item xs={12} sm={props.sm} className={classes.input}>
             <Autocomplete
                 id="autocomplete"
-                freeSolo
+                loading={loading}
+                open={open}
+                onOpen={() => {
+                  setOpen(true);
+                }}
+                onClose={() => {
+                  setOpen(false);
+                }}
                 options={cityOptions}
                 onChange={handleCityAutoCompleteChange}
                 getOptionLabel={option => option.description}
@@ -104,6 +130,16 @@ function CityField(props) {
                         name="city"
                         variant="outlined"
                         onChange={handleChange}
+                        color="secondary"
+                        InputProps={{
+                          ...params.InputProps,
+                          endAdornment: (
+                            <React.Fragment>
+                              {loading ? <CircularProgress color="secondary" size={20} /> : null}
+                              {params.InputProps.endAdornment}
+                            </React.Fragment>
+                          )
+                        }}
                     />
                 )}
             />

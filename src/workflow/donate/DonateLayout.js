@@ -44,7 +44,7 @@ function DonateLayout(props) {
   return (
     <Grid container justify="center">
       <MapLayout data={data} cityLocation={location} {...props} />
-      <CityField setLocation={handleSetLocation} classes={classes.cityField} />
+      <CityField setLocation={handleSetLocation} classes={classes.cityField} sm={8} />
     </Grid>
   );
 }
