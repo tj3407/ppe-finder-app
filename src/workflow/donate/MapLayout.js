@@ -8,9 +8,9 @@ import CardContainer from "./components/CardContainer";
 
 const useStyles = makeStyles(theme => ({
   map: {
-    left: 0,
-    width: "100%",
-    minHeight: "100vh"
+    maxWidth: 430,
+    maxHeight: 540,
+    margin: "auto",
   },
   infoWindow: {
     padding: theme.spacing(2)
@@ -84,8 +84,8 @@ function MapLayout(props) {
   }
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={12}>
+    // <Grid container justify="center" style={{ maxWidth: 640 }}>
+    //   <Grid item xs={12} style={{ maxWidth: 640 }}>
         <Map
           google={props.google}
           zoom={9}
@@ -129,8 +129,8 @@ function MapLayout(props) {
             <CardContainer item={state.marker} handleInfoWindowClick={() => handleInfoWindowClick()} {...props} />
           </InfoWindow>
         </Map>
-      </Grid>
-    </Grid>
+      /* </Grid>
+    </Grid> */
   );
 }
 

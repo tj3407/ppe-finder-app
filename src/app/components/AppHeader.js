@@ -9,8 +9,10 @@ const useStyles = makeStyles((theme) => ({
   },
   h4: {
     fontWeight: "bold",
-    fontFamily: "Overlock SC, cursive",
+    // fontFamily: "Overlock SC, cursive",
+    fontWeight: 500,
     padding: 10,
+    marginLeft: 30,
     color: "white",
   },
   link: {
@@ -24,9 +26,9 @@ function AppHeader() {
     <Grid container justify="flex-start" className={classes.root}>
       <AppBar position="static" color="secondary" variant="outlined">
         <Link href="/ppe-finder-app" className={classes.link}>
-          <Typography variant="h4" className={classes.h4}>
+          <Typography variant="h5" className={classes.h4}>
             D<SupervisedUserCircleOutlinedIcon />
-            nate PPE
+            NATE PPE
           </Typography>
         </Link>
       </AppBar>

@@ -2,8 +2,8 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { db } from "../../components/firebase/firebase";
-import { Grid } from "@material-ui/core";
-
+import { Grid, Paper, Typography, Divider } from "@material-ui/core";
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import MapLayout from "./MapLayout";
 import CityField from "../../components/fields/CityField";
 
@@ -14,6 +14,31 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     width: "75%",
   },
+  map: {
+    margin: "auto",
+    maxWidth: 980,
+    marginBottom: 100
+  },
+  citySearch: {
+    maxWidth: 670
+  },
+  item: {
+    marginTop: 20,
+    marginBottom: 20
+  },
+  icon: {
+    verticalAlign: "middle"
+  },
+  paper: {
+    padding: "0 20px",
+    cursor: "pointer",
+    maxHeight: 540,
+    overflow: "auto"
+  },
+  container: {
+    border: "1px solid gray",
+    width: "auto"
+  }
 }));
 
 function DonateLayout(props) {
@@ -41,10 +66,43 @@ function DonateLayout(props) {
     setLocation(location);
   };
 
+  const handleClick = item => event => {
+    props.history.push({
+      pathname: "/donate/org",
+      state: item
+    });
+  }
+  console.log(data)
   return (
-    <Grid container justify="center">
-      <MapLayout data={data} cityLocation={location} {...props} />
-      <CityField setLocation={handleSetLocation} classes={classes.cityField} sm={8} />
+    <Grid container justify="center" className={classes.map}>
+      <Grid item xs={12} className={classes.citySearch}>
+        <CityField setLocation={handleSetLocation} />
+      </Grid>
+      <Grid container justify="space-between" className={classes.container}>
+          {data.length > 0 && <><Grid item xs={12} sm={4}>
+            <Grid className={classes.paper}>
+              {data.map(item => {
+                return (
+                  <React.Fragment key={item.uid}>
+                    <Grid item className={classes.item} onClick={handleClick(item)}>
+                        <Typography variant="body1">
+                          {item.orgName?.structured_formatting?.main_text || item.orgName?.name}
+                        </Typography>
+                        <Typography variant="caption">
+                          <LocationOnOutlinedIcon className={classes.icon} color="secondary" />
+                          {item.orgAddress?.formatted_address}
+                        </Typography>
+                    </Grid>
+                    <Divider />
+                  </React.Fragment>
+                )
+              })}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <MapLayout data={data} cityLocation={location} {...props} />
+          </Grid></>}
+      </Grid>
     </Grid>
   );
 }
