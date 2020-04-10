@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    // width: "100%"
   },
   icon: {
     verticalAlign: "middle"
@@ -33,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 20px",
     cursor: "pointer",
     maxHeight: 540,
-    overflow: "auto"
+    overflowY: "scroll"
   },
   container: {
-    width: "auto"
+    maxWidth: 640
   }
 }));
 
@@ -78,12 +79,12 @@ function DonateLayout(props) {
         <CityField setLocation={handleSetLocation} />
       </Grid>
       {data.length > 0 && <>
-        <Grid container justify="space-between" className={classes.container}>
+        <Grid container justify="center" className={classes.container}>
           <Grid item xs={12} sm={4}>
             <Grid className={classes.paper}>
-              {data.map(item => {
+              {data.map((item, index) => {
                 return (
-                  <React.Fragment key={item.uid}>
+                  <React.Fragment key={index}>
                     <Grid item className={classes.item} onClick={handleClick(item)}>
                         <Typography variant="body1">
                           {item.orgName?.structured_formatting?.main_text || item.orgName?.name}
