@@ -9,6 +9,9 @@ import ConfirmationPage from "./components/ConfirmationPage";
 import { db } from "../../components/firebase/firebase";
 import Alert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,8 +28,15 @@ const useStyles = makeStyles(theme => ({
     color: "green",
     fontWeight: "bold",
     fontFamily: "Merienda, cursive"
+  },
+  "MuiStepIcon-active": {
+    color: "#f50057"
   }
 }));
+
+function getSteps() {
+  return ['Items', 'Location', 'Details', 'Contact'];
+}
 
 function RequestLayout() {
   const classes = useStyles();
@@ -36,6 +46,8 @@ function RequestLayout() {
   const [error, setError] = React.useState(null);
   const [success, setSuccess] = React.useState(false);
   const [valueChange, setValueChange] = React.useState(false);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const steps = getSteps();
 
   const form = React.useRef({
     items: [],
@@ -43,7 +55,9 @@ function RequestLayout() {
     orgAddress: null,
     department: "",
     building: "",
-    contact: ""
+    contact: "",
+    email: "",
+    phone: ""
   });
 
   const mapping = {
@@ -112,7 +126,10 @@ function RequestLayout() {
   };
 
   const getContact = value => {
-    form.current.contact = value;
+    const { name, email, phone } = value;
+    form.current.contact = name;
+    form.current.email = email;
+    form.current.phone = phone;
     setValueChange(!valueChange);
   };
 
@@ -120,6 +137,7 @@ function RequestLayout() {
     if (count !== Object.keys(mapping).length - 1) {
       setCount(count + 1);
       if (currentPage !== "contact") {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setIsDisabled(true);
       }
     }
@@ -147,9 +165,19 @@ function RequestLayout() {
 
   return (
     <Grid container justify="center" className={classes.root}>
-      <Typography variant="h6" style={{ textAlign: "left", paddingLeft: 20 }}>
-        Request for PPE
-      </Typography>
+      <Grid item xs={12}>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label, index) => {
+            const stepProps = { color: "#f50057" };
+            const labelProps = {};
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+      </Grid>
       {error && <Alert severity="error">{error}</Alert>}
       <Snackbar
         open={success}

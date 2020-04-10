@@ -34,7 +34,9 @@ function ConfirmationPage(props) {
     department: "Department Name",
     building: "Building Name/Number",
     contact: "Contact Person",
-    orgAddress: "Organization Address"
+    orgAddress: "Organization Address",
+    email: "Email",
+    phone: "Phone Number"
   };
 
   return (

@@ -16,7 +16,7 @@ export const itemMapping = [
     selected
   },
   {
-    title: "Face Mask",
+    title: "Surgical Mask",
     label: "face mask",
     img: faceMask,
     subheader: "FACE MASK",

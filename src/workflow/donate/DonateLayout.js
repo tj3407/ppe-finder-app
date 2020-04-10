@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto"
   },
   container: {
-    border: "1px solid gray",
     width: "auto"
   }
 }));
@@ -78,8 +77,9 @@ function DonateLayout(props) {
       <Grid item xs={12} className={classes.citySearch}>
         <CityField setLocation={handleSetLocation} />
       </Grid>
-      <Grid container justify="space-between" className={classes.container}>
-          {data.length > 0 && <><Grid item xs={12} sm={4}>
+      {data.length > 0 && <>
+        <Grid container justify="space-between" className={classes.container}>
+          <Grid item xs={12} sm={4}>
             <Grid className={classes.paper}>
               {data.map(item => {
                 return (
@@ -101,8 +101,9 @@ function DonateLayout(props) {
           </Grid>
           <Grid item xs={12} sm={8}>
             <MapLayout data={data} cityLocation={location} {...props} />
-          </Grid></>}
-      </Grid>
+          </Grid>
+        </Grid>
+      </>}
     </Grid>
   );
 }

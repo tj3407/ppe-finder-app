@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     backgroundColor: "white",
-    marginTop: 60
   }
 }));
 

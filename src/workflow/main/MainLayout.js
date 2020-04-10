@@ -97,17 +97,23 @@ const MainLayout = (props) => {
             <Typography variant="h2" align="left" className={classes.header}>
               WE CAN BEAT THIS TOGETHER
             </Typography>
+            <Typography paragraph style={{ color: "white", textAlign: "left", padding: "20px 20px 0 0" }}>
+              Health care workers and first responders need our help more than
+              ever. They have always been there during our time of need. Let us return the
+              favor and try to get them the protection they need in order to fight
+              this pandemic.
+            </Typography>
           </Grid>
           <Grid item xs={12} style={{ paddingLeft: 40, textAlign: "left" }}>
             <Button
               size="large"
-              onClick={handleClick("learn")}
+              onClick={handleClick("donate")}
               color="secondary"
               disableElevation
               variant="contained"
-              style={{ width: 250, height: 50, fontWeight: "800" }}
+              style={{ width: 250, height: 50, fontWeight: "800", marginBottom: 40 }}
             >
-              LEARN MORE
+              GIVE NOW
             </Button>
           </Grid>
         </Grid>
@@ -138,7 +144,7 @@ const MainLayout = (props) => {
           xs={12}
           sm={4}
           className={classes.desc}
-          style={{ paddingTop: 40, backgroundColor: "green" }}
+          style={{ paddingTop: 40, backgroundColor: "purple" }}
           onClick={handleClick("request")}
         >
           <Typography
