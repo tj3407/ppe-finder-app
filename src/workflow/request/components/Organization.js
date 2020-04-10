@@ -70,7 +70,6 @@ function Organization(props) {
   };
 
   const handleSetLocation = (location) => {
-    console.log(location)
     if (!Object.keys(location).length) {
       setShowOrgField(false);
     } else {

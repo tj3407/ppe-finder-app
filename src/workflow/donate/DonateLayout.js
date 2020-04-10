@@ -71,7 +71,7 @@ function DonateLayout(props) {
       state: item
     });
   }
-  console.log(data)
+
   return (
     <Grid container justify="center" className={classes.map}>
       <Grid item xs={12} className={classes.citySearch}>

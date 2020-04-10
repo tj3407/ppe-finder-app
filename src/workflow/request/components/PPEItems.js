@@ -66,7 +66,7 @@ function PPEItems(props) {
       <Grid container style={{ padding: 16 }}>
       {itemMapping.map((product, index) => {
         return (
-          <Grid item xs={6} style={{ textAlign: "left" }}>
+          <Grid item xs={6} style={{ textAlign: "left" }} key={product.label}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -74,7 +74,6 @@ function PPEItems(props) {
                   name={product.label} 
               />}
               label={product.title}
-              key={product.label}
             />
           </Grid>
   
