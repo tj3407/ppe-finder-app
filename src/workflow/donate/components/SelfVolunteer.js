@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import { labelMapping } from "../../../metadata/mappings";
+import { db } from "../../../components/firebase/firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,9 +62,30 @@ const useStyles = makeStyles((theme) => ({
 const SelfVolunteer = React.forwardRef((props, ref) => {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const [success, setSuccess] = React.useState(false);
 
   const handleConfirmClick = (event) => {
-    console.log(props.orgDetails)
+    const data = {
+      type: "self-volunteer",
+      items: props.itemsToDonate,
+      orgInfo: props.orgDetails,
+      uid: new Date().getTime()
+    }
+
+    db.collection("donations")
+      .doc(data.uid.toString())
+      .set(data)
+      .then(() => {
+        setSuccess(true);
+        setTimeout(() => {
+          window.location = "/ppe-finder-app";
+        }, 2000);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+
     setLoading(true);
     setTimeout(() => {
       props.onClose();
