@@ -1,1 +1,0 @@
-{"version":3,"sources":["request.scss"],"names":[],"mappings":"AAAA,+BAEQ,sBAA0B,CAC1B,wBAA4B,CAHpC,kCAMQ,WAAY","file":"8.758cd6b6.chunk.css","sourcesContent":["html.ppe {\r\n    .MuiCardHeader-action {\r\n        margin-top: 0px !important;\r\n        margin-right: 0px !important;\r\n    }\r\n    .MuiSvgIcon-colorPrimary {\r\n        color: green;\r\n    }\r\n}\r\n"]}
