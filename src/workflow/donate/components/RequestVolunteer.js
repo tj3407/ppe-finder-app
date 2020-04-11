@@ -9,12 +9,15 @@ import {
   TextField,
   MenuItem,
   CircularProgress,
-  Button,
+  Button
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import AddressField from "../../../components/fields/AddressField";
+import CheckBoxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
+import { db } from "../../../components/firebase/firebase";
+import { labelMapping } from "../../../metadata/mappings";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +79,7 @@ function RequestVolunteer(props) {
     (props.orgDetails.orgName &&
       props.orgDetails.orgName.structured_formatting &&
       props.orgDetails.orgName.structured_formatting.main_text) ||
-      (props.orgDetails.orgName && props.orgDetails.orgName.name) ||
+    (props.orgDetails.orgName && props.orgDetails.orgName.name) ||
     props.orgDetails.orgName ||
     "";
 
@@ -93,17 +96,62 @@ function RequestVolunteer(props) {
     timeLabel: "AM",
   });
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const [success, setSuccess] = React.useState(false);
+  const [fields, setFields] = React.useState({
+    date: "",
+    pickupTime: "",
+    address: "",
+    addressNotes: ""
+  });
 
   const handleChange = (event) => {
-    setTime({ ...time, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+
+    if (name === "date") {
+      setFields({ ...fields, date: value });
+    } else if (name === "addressNotes") {
+      setFields({ ...fields, addressNotes: value });
+    } else {
+      setTime({ ...time, [name]: value });
+    }
   };
 
+  const parseFields = () => {
+    const pickupTime = `${time.hour}:${time.minute} ${time.timeLabel}`;
+    return { ...fields, pickupTime };
+  }
+
   const handleConfirmClick = (event) => {
+    const data = {
+      type: "request-volunteer",
+      items: props.itemsToDonate,
+      orgInfo: props.orgDetails,
+      form: parseFields(),
+      uid: new Date().getTime()
+    }
+
+    db.collection("donations")
+      .doc(data.uid.toString())
+      .set(data)
+      .then(() => {
+        setSuccess(true);
+        setTimeout(() => {
+          window.location = "/ppe-finder-app";
+        }, 2000);
+      })
+      .catch((error) => {
+        setError(error);
+      });
     setLoading(true);
     setTimeout(() => {
       props.onClose();
     }, 3000);
   };
+
+  const handleSetAddress = (value) => {
+    setFields({ ...fields, address: value });
+  }
 
   return props.show ? (
     <Paper className={classes.modal} variant="outlined">
@@ -147,10 +195,12 @@ function RequestVolunteer(props) {
             </Grid>
             <Grid item xs={12} sm={9}>
               <TextField
+                name="date"
                 fullWidth
                 type="date"
                 variant="outlined"
                 size="small"
+                onChange={handleChange}
                 InputProps={{
                   startAdornment: (
                     <DateRangeIcon
@@ -238,7 +288,7 @@ function RequestVolunteer(props) {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={9}>
-              <AddressField />
+              <AddressField setAddress={handleSetAddress} />
             </Grid>
           </Grid>
           <Grid container spacing={1} alignItems="flex-end">
@@ -255,12 +305,34 @@ function RequestVolunteer(props) {
             <Grid item xs={12} sm={9}>
               <TextField
                 fullWidth
+                name="addressNotes"
                 type="text"
                 variant="outlined"
                 size="small"
                 placeholder="(Front Door, Side Door, Porch, etc...)"
+                onChange={handleChange}
               />
             </Grid>
+          </Grid>
+          <Divider className={classes.divider} />
+          <Typography paragraph>
+            Donating the following items:
+          </Typography>
+          <Grid container justify="space-between">
+            {props.itemsToDonate.length &&
+              props.itemsToDonate.map((item) => {
+                return (
+                  <Grid item key={item} className={classes.items}>
+                    <CheckBoxOutlinedIcon
+                      color="secondary"
+                      className={classes.icon}
+                    />
+                    <Typography paragraph display="inline" color="secondary">
+                      {labelMapping[item]}
+                    </Typography>
+                  </Grid>
+                );
+              })}
           </Grid>
           <Grid item xs={12} sm={4} className={classes.button}>
             <Button

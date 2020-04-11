@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +20,7 @@ function AddressField(props) {
   const classes = useStyles();
   const [options, setOptions] = React.useState([]);
   const [value, setValue] = React.useState("");
+  const loading = value && options.length === 0;
 
   const [location, setLocation] = React.useState({ lat: null, lng: null });
   const timer = React.useRef();
@@ -44,13 +46,20 @@ function AddressField(props) {
 
   const handleChange = (event) => {
     const { value } = event.target;
-
+    
+    if (props.setAddress) {
+      props.setAddress(value);
+    }
     setValue(value);
   };
 
-  const handleCityAutoCompleteChange = async (event, value) => {
+  const handleAutoCompleteChange = async (event, value) => {
     if (!value) return;
-
+    const { main_text = "", secondary_text = "" } = value.structured_formatting;
+    
+    if (props.setAddress) {
+      props.setAddress(`${main_text} ${secondary_text}`);
+    }
     const res = await fetch(
       `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?place_id=${value.place_id}&fields=geometry&key=${process.env.REACT_APP_API_KEY}`
     );
@@ -76,7 +85,7 @@ function AddressField(props) {
       size="small"
       freeSolo
       options={options}
-      onChange={handleCityAutoCompleteChange}
+      onChange={handleAutoCompleteChange}
       getOptionLabel={(option) => option.description}
       renderOption={(option) => (
         <React.Fragment>
@@ -97,6 +106,15 @@ function AddressField(props) {
           name="address"
           variant="outlined"
           onChange={handleChange}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <React.Fragment>
+                {loading ? <CircularProgress color="secondary" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            )
+          }}
         />
       )}
     />

@@ -63,6 +63,7 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleConfirmClick = (event) => {
+    console.log(props.orgDetails)
     setLoading(true);
     setTimeout(() => {
       props.onClose();
