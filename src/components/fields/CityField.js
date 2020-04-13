@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -97,6 +99,7 @@ function CityField(props) {
         <Grid item xs={12} sm={props.sm} className={classes.input}>
             <Autocomplete
                 id="autocomplete"
+                freeSolo
                 loading={loading}
                 open={open}
                 onOpen={() => {
@@ -137,7 +140,12 @@ function CityField(props) {
                               {loading ? <CircularProgress color="secondary" size={20} /> : null}
                               {params.InputProps.endAdornment}
                             </React.Fragment>
-                          )
+                          ),
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchIcon color="secondary" />
+                            </InputAdornment>
+                          ),
                         }}
                     />
                 )}

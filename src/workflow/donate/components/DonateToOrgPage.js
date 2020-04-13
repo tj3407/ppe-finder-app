@@ -10,7 +10,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 import { labelMapping } from "../../../metadata/mappings";
-import Modal from "@material-ui/core/Modal";
 import SelfVolunteer from "./SelfVolunteer";
 import RequestVolunteer from "./RequestVolunteer";
 import Dialog from '@material-ui/core/Dialog';
@@ -59,6 +58,9 @@ function DonateToOrgPage(props) {
   const [clickedBtn, setClickedBtn] = React.useState("");
 
   React.useEffect(() => {
+    if (!props.location.state) {
+      window.location = "/ppe-finder-app#/donate";
+    }
     setOrgDetails(props.location.state);
   }, []);
 

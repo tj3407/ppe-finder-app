@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: "auto",
-    marginTop: theme.spacing(4),
   },
   icon: {
     verticalAlign: "middle",
@@ -136,11 +135,13 @@ function RequestVolunteer(props) {
       .set(data)
       .then(() => {
         setSuccess(true);
+        setLoading(false);
         setTimeout(() => {
           window.location = "/ppe-finder-app";
-        }, 2000);
+        }, 500);
       })
       .catch((error) => {
+        setLoading(false);
         setError(error);
       });
     setLoading(true);

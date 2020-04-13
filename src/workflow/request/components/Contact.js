@@ -12,11 +12,17 @@ function Contact(props) {
   const classes = useStyles();
   const [contact, setContact] = React.useState({ name: "", email: "", phone: "" });
 
+  React.useEffect(() => {
+    if (Object.values(contact).length) {
+      if (props.contact) {
+        props.contact(contact);
+      }
+    }
+
+  }, [contact])
+
   const handleChange = event => {
     setContact({ ...contact, [event.target.name]: event.target.value });
-    if (props.contact) {
-      props.contact(contact);
-    }
   };
 
   return (

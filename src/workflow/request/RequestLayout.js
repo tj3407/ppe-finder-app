@@ -136,8 +136,8 @@ function RequestLayout() {
   const handleNext = event => {
     if (count !== Object.keys(mapping).length - 1) {
       setCount(count + 1);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
       if (currentPage !== "contact") {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setIsDisabled(true);
       }
     }

@@ -12,20 +12,14 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: 0,
     left: 0,
-    width: "75%",
   },
   map: {
     margin: "auto",
-    maxWidth: 980,
     marginBottom: 100
-  },
-  citySearch: {
-    maxWidth: 670
   },
   item: {
     marginTop: 20,
     marginBottom: 20,
-    // width: "100%"
   },
   icon: {
     verticalAlign: "middle"
@@ -33,20 +27,17 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: "0 20px",
     cursor: "pointer",
-    maxHeight: 540,
-    overflowY: "scroll"
+    maxHeight: 640,
+    overflowY: "auto"
   },
-  container: {
-    maxWidth: 640
-  }
 }));
 
 function DonateLayout(props) {
   const classes = useStyles();
   const [data, setData] = React.useState([]);
   const [location, setLocation] = React.useState({
-    lat: 37.354107,
-    lng: -121.955238,
+    lat: 37.3337,
+    lng: -121.8907,
   });
 
   React.useEffect(() => {
@@ -75,12 +66,15 @@ function DonateLayout(props) {
 
   return (
     <Grid container justify="center" className={classes.map}>
-      <Grid item xs={12} className={classes.citySearch}>
-        <CityField setLocation={handleSetLocation} />
-      </Grid>
       {data.length > 0 && <>
         <Grid container justify="center" className={classes.container}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={5} style={{ width: "100%" }}>
+            <Grid item xs={12} style={{ padding: "20px 0 0 20px"}}>
+              <Typography paragraph style={{ marginBottom: 0, fontWeight: 700 }}>Search City</Typography>
+            </Grid>
+            <Grid item xs={12} className={classes.citySearch}>
+              <CityField setLocation={handleSetLocation} />
+            </Grid>
             <Grid className={classes.paper}>
               {data.map((item, index) => {
                 return (
@@ -100,7 +94,7 @@ function DonateLayout(props) {
               })}
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={7}>
             <MapLayout data={data} cityLocation={location} {...props} />
           </Grid>
         </Grid>

@@ -78,11 +78,13 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
       .set(data)
       .then(() => {
         setSuccess(true);
+        setLoading(false);
         setTimeout(() => {
           window.location = "/ppe-finder-app";
-        }, 2000);
+        }, 500);
       })
       .catch((error) => {
+        setLoading(false);
         setError(error);
       });
 
