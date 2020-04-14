@@ -2,14 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
-import GroupIcon from "@material-ui/icons/Group";
 import { Typography } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import landing from "../../images/hand-landing.jpg";
 import AppFooter from "../../app/components/AppFooter";
+import LocalHospitalOutlinedIcon from '@material-ui/icons/LocalHospitalOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import AddLocationOutlinedIcon from '@material-ui/icons/AddLocationOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +61,24 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 120,
     cursor: "pointer",
   },
+  hero: {
+    display: "block",
+    width: 58,
+    height: 58,
+    position: "relative",
+    left: "calc(50% - 30px)",
+    borderRadius: 60,
+    top: -100,
+    boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.15)",
+    backgroundColor: "inherit",
+    color: "white",
+  },
+  heroIcon: {
+    position: "relative",
+    padding: 10,
+    width: 40,
+    height: 40
+  }
 }));
 
 const MainLayout = (props) => {
@@ -117,26 +133,6 @@ const MainLayout = (props) => {
             </Button>
           </Grid>
         </Grid>
-        {/* <Grid item xs={12} md={4}>
-          <CardItem
-            title="FRONTLINERS"
-            description={frontliners}
-            color="primary"
-            {...props}
-          >
-            Request
-          </CardItem>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <CardItem
-            title="CITIZENS"
-            color="secondary"
-            description={citizens}
-            {...props}
-          >
-            Donate
-          </CardItem>
-        </Grid> */}
       </Grid>
       <Grid container style={{ margin: 0, marginTop: 0 }}>
         <Grid
@@ -155,6 +151,9 @@ const MainLayout = (props) => {
           >
             REQUEST
           </Typography>
+          <HeroItem>
+            <LocalHospitalOutlinedIcon className={classes.heroIcon} />
+          </HeroItem>
         </Grid>
         <Grid
           item
@@ -172,6 +171,9 @@ const MainLayout = (props) => {
           >
             DONATE
           </Typography>
+          <HeroItem>
+            <AccountCircleOutlinedIcon className={classes.heroIcon} />
+          </HeroItem>
         </Grid>
         <Grid
           item
@@ -189,6 +191,9 @@ const MainLayout = (props) => {
           >
             VOLUNTEER
           </Typography>
+          <HeroItem>
+            <AddLocationOutlinedIcon className={classes.heroIcon} />
+          </HeroItem>
         </Grid>
       </Grid>
       <Grid item xs={12} className={classes.description}>
@@ -208,43 +213,13 @@ const MainLayout = (props) => {
   );
 };
 
-const CardItem = (props) => {
+const HeroItem = (props) => {
   const classes = useStyles();
-  const handleClick = (event) => {
-    const { name } = event.currentTarget;
-    if (name === "CITIZENS") {
-      props.history.push("/donate");
-    } else {
-      props.history.push("/request");
-    }
-  };
   return (
-    <Card variant="outlined" className={classes.card}>
-      <CardContent style={{ height: 160 }}>
-        {props.title === "FRONTLINERS" ? <LocalHospitalIcon /> : <GroupIcon />}
-        <Typography variant="h6" gutterBottom style={{ fontWeight: "bold" }}>
-          {props.title}
-        </Typography>
-        <Typography variant="body2" style={{ textAlign: "left" }}>
-          {props.description}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Grid container justify="center">
-          <Button
-            size="large"
-            disableElevation
-            variant="contained"
-            name={props.title}
-            onClick={handleClick}
-            color={props.color}
-          >
-            {props.children}
-          </Button>
-        </Grid>
-      </CardActions>
-    </Card>
-  );
-};
+    <div className={classes.hero}>
+      {props.children}
+    </div>
+  )
+}
 
 export default React.memo(MainLayout);
