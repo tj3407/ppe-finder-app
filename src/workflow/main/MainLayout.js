@@ -9,13 +9,13 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import landing from "../../images/hand-landing.jpg";
+import AppFooter from "../../app/components/AppFooter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: "center",
     "& > *": {
       margin: theme.spacing(2),
-      marginTop: theme.spacing(6),
     },
   },
   button: {
@@ -203,6 +203,7 @@ const MainLayout = (props) => {
           global pandemic. Together we can beat this!
         </Typography>
       </Grid>
+      <AppFooter />
     </Grid>
   );
 };
