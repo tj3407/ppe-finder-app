@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Grid, Divider } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { HashRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AppHeader from "./components/AppHeader";
 
@@ -39,7 +39,7 @@ function AppLayout() {
     <React.Fragment>
       <AppHeader />
       <Divider style={{ width: "100%" }} />
-      <HashRouter basename="/">
+      <BrowserRouter>
         <Suspense fallback={<Grid item xs={12} className={classes.loader}><CircularProgress color="secondary" className={classes.progress} /></Grid>}>
           <Route
             exacts
@@ -66,7 +66,7 @@ function AppLayout() {
             component={() => <DonateToOrgPage />}
           />
         </Suspense>
-      </HashRouter>
+      </BrowserRouter>
     </React.Fragment>
   );
 }
