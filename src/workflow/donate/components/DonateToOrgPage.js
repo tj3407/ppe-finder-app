@@ -59,7 +59,7 @@ function DonateToOrgPage(props) {
 
   React.useEffect(() => {
     if (!props.location.state) {
-      window.location = "/ppe-finder-app#/donate";
+      window.location = "/donate";
     }
     setOrgDetails(props.location.state);
   }, []);

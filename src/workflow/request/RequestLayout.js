@@ -155,7 +155,7 @@ function RequestLayout() {
       .then(() => {
         setSuccess(true);
         setTimeout(() => {
-          window.location = "/ppe-finder-app";
+          window.location = "/";
         }, 2000);
       })
       .catch(error => {

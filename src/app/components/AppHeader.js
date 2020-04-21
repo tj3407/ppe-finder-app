@@ -29,7 +29,7 @@ function AppHeader() {
       variant="outlined"
       className={classes.root}
     >
-      <Link href="/ppe-finder-app" className={classes.link}>
+      <Link href="/" className={classes.link}>
         <Typography variant="h5" className={classes.h4}>
           D<SupervisedUserCircleOutlinedIcon />
           NATE PPE

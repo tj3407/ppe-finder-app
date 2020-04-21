@@ -80,7 +80,7 @@ const SelfVolunteer = React.forwardRef((props, ref) => {
         setSuccess(true);
         setLoading(false);
         setTimeout(() => {
-          window.location = "/ppe-finder-app";
+          window.location = "/";
         }, 500);
       })
       .catch((error) => {

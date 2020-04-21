@@ -137,7 +137,7 @@ function RequestVolunteer(props) {
         setSuccess(true);
         setLoading(false);
         setTimeout(() => {
-          window.location = "/ppe-finder-app";
+          window.location = "/";
         }, 500);
       })
       .catch((error) => {
